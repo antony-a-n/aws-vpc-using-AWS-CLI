@@ -323,7 +323,7 @@ for 3306, we need access to this port only from the web server, so specify the s
 ```
 [root@testserver ~]# aws ec2 authorize-security-group-ingress --group-id sg-0b6ae72007790dc70 --protocol tcp --port 3306 --source-group sg-0eb8bfd79d3513ed3
 ```
-# 8.Creating keypair
+# 8.Creating Keypair
 
 Now we need to create a key for connecting to our servers.
 ```
@@ -342,7 +342,7 @@ Before proceeding, we need enableDnsHostnames attribute for enabling the DNS hos
 [root@testserver ~]#aws ec2 modify-vpc-attribute --vpc-id vpc-024b7015b71d95647 --enable-dns-support "{\"Value\":true}"
 [root@testserver ~]#aws ec2 modify-vpc-attribute --vpc-id vpc-024b7015b71d95647 --enable-dns-hostnames "{\"Value\":true}"
 ```
-# 9. Launching instances in the new  VPC
+# 9. Launching Instances in the new  VPC
  
 Now we can launch our instances in our VPC.
 
