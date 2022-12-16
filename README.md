@@ -1,5 +1,6 @@
 # Creating VPC via AWS-CLI
 ==================================
+Hello folks,
 
   Infra management is a big task for every company. from choosing the right requirements to selecting the right tools to create and manage it.
  In most companies, infra management is done via terraform. Now we are trying to configure a basic VPC with AWS CLI for our testing purposes and to compare both of the tools.
