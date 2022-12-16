@@ -8,17 +8,17 @@ Hello folks,
  
  ## Resources created by this code
 -   2 public subnets
--	1 private subnet
--	1 public route table
--	1 private route table
+-	1 Private subnet
+-	1 Public route table
+-	1 Private route table
 -	1 NAT gateway
 -	1 Internet gateway
--	1 elastic IP
+-	1 Elastic IP
 -	1 Bastion instance
--	1 front-end instance
+-	1 Front-end instance
 -	1 backend -instance
 	
-#### Before proceeding please make sure that you have configured an IAM user with programmatic access EC2 full permission.
+#### Before proceeding please make sure that you have configured an IAM user with programmatic access and EC2 full permission.
 
 	
 FYI, We will keep our bastion and front-end server in public subnets, and the backend server will be placed in the private subnet and it will connect to the internet via the NAT gateway.
@@ -40,11 +40,12 @@ Default output format [None]: json
 [root@testserver ~]#	
 ```
 	
-Once we successfully configured awscli, now we can proceed with creating VPC
+Once we successfully configured awscli, we can proceed with creating VPC
+
 ## 2.VPC creation
 ===================
 
-For Creating VPC, you can use the following command, In this example, we are configuring a VPC with CIDR block "10.0.0.0/16"
+For Creating VPC, you can use the following command, **create-vpc** In this example, we are configuring a VPC with CIDR block "10.0.0.0/16"
 ```
 [root@ip-172-31-47-248 ~]# aws ec2 create-vpc --cidr-block 10.0.0.0/16 --query Vpc.VpcId --output text 
 ```
@@ -58,12 +59,12 @@ vpc-024b7015b71d95647
 ```
 You have created a VPC with ID "vpc-024b7015b71d95647 "
 
-It's better to add tags to the resources created for easy identification in the future. **create-tags**  option can be used for that. In our example, we are using the  Key as Name and Value as TestVPC. **--resources** is used to specify our VPCID.
+It's better to add tags to the resources created for easy identification in the future. **create-tags**  option can be used for that. In our example, we are using the  Key as Name and Value as TestVPC. **--resources** is used to specify our VPC ID.
 
 ```
 [root@testserver ~]# aws ec2 create-tags --resources vpc-024b7015b71d95647 --tags Key=Name,Value=TestVPC
 ```
-# 3.Creating subnets
+# 3.Creating Subnets
 ==========================
 
 So once you have created the VPC and added the required tags, you can now proceed with making the subnets, We need  2 public subnets and 1 private subnet. So we are creating 3 subnets.
@@ -87,7 +88,7 @@ Add tags to the created subnets. replace the subnetID with yours
 [root@testserver ~]# aws ec2 create-tags --resources subnet-085df01e6b2dbeb7c --tags Key=Name,Value=subnet2 
 [root@testserver ~]# aws ec2 create-tags --resources subnet-082e68f430592fa3b --tags Key=Name,Value=subnet3 
 ```
-# 4.Creating internet gateway
+# 4.Creating Internet Gateway
 ======================================
 
 We are routing the internet traffic in and out to our VPC via the internet gateway. So in the next step, we will create the internet gateway. 
@@ -105,15 +106,15 @@ Once you successfully created the internet gateway, we need to attach the intern
 
 **attach-internet-gateway** is used to  attach IGW to VPC
 
-Please note that you need to replace the VPCid and IGWid with your corresponding values.
+Please note that you need to replace the VPC-id and IGW-id with your corresponding values.
 
 ```
 [root@testserver ~]# aws ec2 attach-internet-gateway --vpc-id vpc-024b7015b71d95647 --internet-gateway-id igw-01f91a2838341f868
 ```
 
-Success, now you can proceed with creating  route tables,
+Success, now you can proceed with creating  route tables.
 
-# 5.Creating route tables
+# 5.Creating Route Tables
 =========================
 
 We are placing one of our subnets as private, and the other two subnets will be public, so we have to create separate route tables for the subnets.
@@ -162,7 +163,7 @@ You will get a message which indicates the subnets were attached successfully li
 ```
 
 We are keeping 10.0.128.0/18 as a private subnet, so we are routing the traffic via a NAT gateway and we are placing the NAT gateway in the public subnet.
-# 6.Creating NAT gateway
+# 6.Creating NAT Gateway
 ================================
 
  For configuring the NAT gateway, you need an elastic IP. You can get it using the following command **allocate-address**
@@ -263,7 +264,7 @@ don't forget to replace the subnet ID.
 [root@testserver ~]# aws ec2 modify-subnet-attribute --subnet-id subnet-085df01e6b2dbeb7c --map-public-ip-on-launch
 
 ```
-# 7.Creating security groups & adding rules to the groups
+# 7.Creating Security Groups & adding rules to the groups
 
 Now we have to create the required security group which acts like a firewall. In our VPC setup, we are launching 3 instances, a bastion server, a fronted server which is going to place in the public subnets, and a DB server placed in the private subnet. For the bastion server, only port 22 is open and for the front-end server port, 80 will accept the traffic from anywhere, and 22 is from the bastion server, and for the DB server port 22 is accessible from the bastion server, and 3306 from the frontend server.
 
