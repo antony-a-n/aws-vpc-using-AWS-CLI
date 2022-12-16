@@ -23,7 +23,7 @@ Hello folks,
 	
 FYI, We will keep our bastion and front-end server in public subnets, and the backend server will be placed in the private subnet and it will connect to the internet via the NAT gateway.
 
-This setup can be implemented to  host wordpress website by keeping the as database server in the private subnet and webserver in  the publich subnet and both can be accessed from the bsation server.
+This setup can be implemented to  host wordpress website by keeping the as database server in the private subnet and webserver in  the public subnet and both can be accessed from the bsation server.
 
 So let's start the process by configuring the AWS CLI  on the server, you should have the **Access key ID** and **Secret access key** of the IAM user to configure this.
 # 1. Configuring AWSCLI	
