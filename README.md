@@ -21,7 +21,7 @@ Hello folks,
 #### Before proceeding please make sure that you have configured an IAM user with programmatic access EC2 full permission.
 
 	
-FYI, We will keep our bastion and front-end server in public subnets, and the backend server will be placed in the public subnet and it will connect to the internet via the NAT gateway.
+FYI, We will keep our bastion and front-end server in public subnets, and the backend server will be placed in the private subnet and it will connect to the internet via the NAT gateway.
 
 This setup can be implemented to  host wordpress website by keeping the as database server in the private subnet and webserver in  the publich subnet and both can be accessed from the bsation server.
 
