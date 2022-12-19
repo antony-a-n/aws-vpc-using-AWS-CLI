@@ -380,4 +380,6 @@ Now  we can add Tags for the created instances.
 ```
 
 
-Once you created the instances  you will be able to access the servers with the Key you have generated. 
+Once you created the instances  you will be able to access the servers with the Key you have generated.
+
+That's it. thank you for reading :)
