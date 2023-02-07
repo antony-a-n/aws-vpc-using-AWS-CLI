@@ -173,7 +173,7 @@ aws ec2 allocate-address --domain vpc
 ```
 
 -- domain defines the playground to your elastic IP address, If you are purchasing it for ec2-classic, then you need to add the value as standard/
-We are using it within the VPC, so we can choose the value as PVC.
+We are using it within the VPC, so we can choose the value as VPC.
 
 ```
 [root@testserver ~]# aws ec2 allocate-address --domain vpc
